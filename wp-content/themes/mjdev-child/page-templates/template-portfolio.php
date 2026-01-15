@@ -55,13 +55,6 @@
 <!-- Main -->
 <main id="main">
     
-    <!-- Hero -->
-    <section id="home" class="hero">
-        <h1>Projects</h1>
-        <p>À procura de um parceiro criativo?</p>
-        <a href="mailto:hello@mariajoao.pt">hello@mariajoao.pt</a>
-    </section>
-    
     <!-- NOVA SECÇÃO: Quem Sou -->
     <section id="about" class="about-section">
         <div class="about-container">
@@ -70,12 +63,12 @@
             <div class="about-images">
                 <!-- Imagem 1 - Entra da ESQUERDA -->
                 <div class="about-image about-image-left" data-direction="left">
-                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop" alt="Workspace" loading="lazy">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/about/conj.jpg" alt="Workspace" loading="lazy">
                 </div>
                 
                 <!-- Imagem 2 - Entra da DIREITA -->
                 <div class="about-image about-image-right" data-direction="right">
-                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=600&fit=crop" alt="Creative tools" loading="lazy">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/about/mjoao.jpg" alt="Workspace" loading="lazy">
                 </div>
                 
                 <!-- Imagem 3 - Entra da ESQUERDA -->
@@ -84,6 +77,13 @@
                 </div>
             </div>
         </div>
+    </section>
+
+        <!-- Hero -->
+    <section id="home" class="hero">
+        <h1>Projects</h1>
+        <p>À procura de um parceiro criativo?</p>
+        <a href="mailto:hello@mariajoao.pt">hello@mariajoao.pt</a>
     </section>
     
     <!-- Filtros -->
