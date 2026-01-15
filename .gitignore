@@ -1,0 +1,25 @@
+# ou
+notepad .gitignore
+```
+
+**Conteúdo do `.gitignore`:**
+```
+# WordPress
+# WordPress
+wp-config.php
+.htaccess
+
+# Uploads e cache
+wp-content/uploads/
+wp-content/cache/
+wp-content/backup/
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log
+
+# IDEs
+.vscode/
+.idea/
+error_log
