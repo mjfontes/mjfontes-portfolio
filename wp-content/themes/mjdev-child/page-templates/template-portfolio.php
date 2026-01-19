@@ -55,29 +55,60 @@
 <!-- Main -->
 <main id="main">
     
-    <!-- NOVA SECÇÃO: Quem Sou -->
-    <section id="about" class="about-section">
-        <div class="about-container">
-            <h2 class="about-title">Quem Sou</h2>
+    <!-- ========================================
+     SECÇÃO QUEM SOU - Composição Animada
+     6 imagens convergem para formar composição
+     ======================================== -->
+
+<section id="about" class="about-section">
+    <div class="about-container">
+        <div class="composition-wrapper loading">
             
-            <div class="about-images">
-                <!-- Imagem 1 - Entra da ESQUERDA -->
-                <div class="about-image about-image-left" data-direction="left">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/about/conj.jpg" alt="Workspace" loading="lazy">
-                </div>
-                
-                <!-- Imagem 2 - Entra da DIREITA -->
-                <div class="about-image about-image-right" data-direction="right">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/about/mjoao.jpg" alt="Workspace" loading="lazy">
-                </div>
-                
-                <!-- Imagem 3 - Entra da ESQUERDA -->
-                <div class="about-image about-image-left" data-direction="left">
-                    <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&h=600&fit=crop" alt="Design process" loading="lazy">
-                </div>
+            <!-- 1. BOARDING PASS - Centro -->
+            <div class="composition-item composition-boarding initial">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/about/boarding.png" 
+                     alt="Boarding Pass" 
+                     loading="lazy">
             </div>
+            
+            <!-- 2. FLOR - Topo centro -->
+            <div class="composition-item composition-flor initial">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/about/flor.png" 
+                     alt="Flor" 
+                     loading="lazy">
+            </div>
+            
+            <!-- 3. PERFUME - Topo direita -->
+            <div class="composition-item composition-perfume initial">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/about/perfume.png" 
+                     alt="Perfume" 
+                     loading="lazy">
+            </div>
+            
+            <!-- 4. CHAVE - Baixo centro -->
+            <div class="composition-item composition-chave initial">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/about/chaves.png" 
+                     alt="Chave Antiga" 
+                     loading="lazy">
+            </div>
+            
+            <!-- 5. POLAROID - Esquerda baixo (COM HOVER) -->
+            <div class="composition-item composition-polaroid initial">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/about/polaroid.png" 
+                     alt="Polaroid" 
+                     loading="lazy">
+            </div>
+            
+            <!-- 6. CHÁVENA - Direita baixo -->
+            <div class="composition-item composition-chavena initial">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/about/chavena.png" 
+                     alt="Chávena de Chá" 
+                     loading="lazy">
+            </div>
+            
         </div>
-    </section>
+    </div>
+</section>
 
         <!-- Hero -->
     <section id="home" class="hero">

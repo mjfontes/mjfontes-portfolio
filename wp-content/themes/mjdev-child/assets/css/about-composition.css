@@ -1,0 +1,253 @@
+/* ========================================
+   ABOUT COMPOSITION CSS - v2.0 MAIOR
+   Imagens aumentadas mantendo proporções
+   ======================================== */
+
+/* Secção About */
+.about-section {
+    min-height: 100vh;
+    padding: 0;
+    background: #f8f8f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Container da composição */
+.composition-wrapper {
+    position: relative;
+    width: 90vw;
+    height: 80vh;
+    max-width: 1400px;
+    max-height: 900px;
+}
+
+/* Base para todas as imagens */
+.composition-item {
+    position: absolute;
+    opacity: 0;
+    will-change: transform, opacity;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.composition-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+/* ========================================
+   POSIÇÕES FINAIS - AUMENTADAS (+33%)
+   ======================================== */
+
+/* 1. BOARDING PASS - Centro */
+.composition-boarding {
+    width: 60%;           /* era 45% */
+    max-width: 730px;     /* era 550px */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+}
+
+/* 2. FLOR - Topo centro/esquerda */
+.composition-flor {
+    width: 35%;           /* era 25% */
+    max-width: 370px;     /* era 280px */
+    top: 5%;
+    left: 25%;
+    transform: rotate(-15deg);
+    z-index: 4;
+}
+
+/* 3. PERFUME - Topo direita */
+.composition-perfume {
+    width: 28%;           /* era 18% */
+    max-width: 265px;     /* era 200px */
+    top: 8%;
+    right: 20%;
+    transform: rotate(12deg);
+    z-index: 5;
+}
+
+/* 4. CHAVE - Baixo centro */
+.composition-chave {
+    width: 22%;           /* era 15% */
+    max-width: 240px;     /* era 180px */
+    bottom: 12%;
+    left: 50%;
+    transform: translateX(-50%) rotate(-25deg);
+    z-index: 2;
+}
+
+/* 5. POLAROID - Esquerda baixo (COM HOVER) */
+.composition-polaroid {
+    width: 32%;           /* era 22% */
+    max-width: 345px;     /* era 260px */
+    bottom: 20%;
+    left: 8%;
+    transform: rotate(-8deg);
+    z-index: 6;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+/* HOVER EFFECT - Só na Polaroid */
+.composition-polaroid:hover {
+    transform: rotate(-8deg) scale(1.05);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+    filter: brightness(1.1) contrast(1.05);
+    cursor: pointer;
+}
+
+/* 6. CHÁVENA - Direita baixo */
+.composition-chavena {
+    width: 28%;           /* era 20% */
+    max-width: 320px;     /* era 240px */
+    bottom: 15%;
+    right: 12%;
+    transform: rotate(5deg);
+    z-index: 4;
+}
+
+/* ========================================
+   POSIÇÕES INICIAIS (antes da animação)
+   ======================================== */
+
+/* Boarding - vem de CIMA */
+.composition-boarding.initial {
+    top: -100%;
+    opacity: 0;
+}
+
+/* Flor - vem da ESQUERDA */
+.composition-flor.initial {
+    left: -100%;
+    opacity: 0;
+}
+
+/* Perfume - vem de BAIXO */
+.composition-perfume.initial {
+    top: 100%;
+    opacity: 0;
+}
+
+/* Chave - vem de BAIXO */
+.composition-chave.initial {
+    bottom: -100%;
+    opacity: 0;
+}
+
+/* Polaroid - vem da ESQUERDA */
+.composition-polaroid.initial {
+    left: -100%;
+    opacity: 0;
+}
+
+/* Chávena - vem da DIREITA */
+.composition-chavena.initial {
+    right: -100%;
+    opacity: 0;
+}
+
+/* ========================================
+   SOMBRAS PARA PROFUNDIDADE
+   ======================================== */
+.composition-item {
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.08));
+}
+
+.composition-boarding {
+    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.12));
+}
+
+.composition-polaroid {
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
+}
+
+/* ========================================
+   RESPONSIVE - MOBILE
+   ======================================== */
+@media (max-width: 768px) {
+    .about-section {
+        padding: 40px 0;
+    }
+    
+    .composition-wrapper {
+        width: 95vw;
+        height: 70vh;
+        transform: scale(0.65);  /* Reduzido para compensar tamanhos maiores */
+    }
+    
+    /* Proporções mantidas no mobile */
+    .composition-boarding {
+        width: 60%;
+    }
+    
+    .composition-flor {
+        width: 35%;
+    }
+    
+    .composition-perfume {
+        width: 28%;
+    }
+    
+    .composition-chave {
+        width: 22%;
+    }
+    
+    .composition-polaroid {
+        width: 32%;
+    }
+    
+    .composition-chavena {
+        width: 28%;
+    }
+    
+    /* Hover desativado no mobile */
+    .composition-polaroid:hover {
+        transform: rotate(-8deg) scale(1);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        filter: none;
+    }
+}
+
+/* Tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .composition-wrapper {
+        width: 90vw;
+        height: 75vh;
+        transform: scale(0.8);  /* Escala ligeiramente menor em tablets */
+    }
+}
+
+/* ========================================
+   PERFORMANCE
+   ======================================== */
+.composition-item {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
+}
+
+/* Loading state */
+.composition-wrapper.loading .composition-item {
+    visibility: hidden;
+}
+
+.composition-wrapper.loaded .composition-item {
+    visibility: visible;
+}

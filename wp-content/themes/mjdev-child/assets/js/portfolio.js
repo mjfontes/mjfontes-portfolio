@@ -1,13 +1,13 @@
 /**
- * MJDev Portfolio - JavaScript v3.4 CORRIGIDO
- * Animações About Section GARANTIDAS
+ * MJDev Portfolio - JavaScript v3.7 FINAL
+ * Menu button ADAPTATIVO por secção
  */
 
 jQuery(document).ready(function($) {
     
     'use strict';
     
-    console.log('🚀 Portfolio v3.4 iniciado - ABOUT FIXED');
+    console.log('🚀 Portfolio v3.7 iniciado - MENU ADAPTATIVO');
     
     // ====== CONFIGURAÇÕES ======
     const isMobile = window.matchMedia("(max-width: 768px)").matches || 
@@ -30,6 +30,51 @@ jQuery(document).ready(function($) {
         };
     }
     
+    // ====== DETECÇÃO DE SECÇÃO (MENU ADAPTATIVO) ======
+    function updateHeaderColor() {
+        const scrollY = $(window).scrollTop();
+        const windowHeight = $(window).height();
+        
+        // Definir limites das secções
+        const splashBottom = $('#splash').offset().top + $('#splash').outerHeight();
+        const aboutTop = $('#about').offset().top;
+        const aboutBottom = aboutTop + $('#about').outerHeight();
+        const projectsTop = $('#home').offset().top;
+        const projectsBottom = projectsTop + $('#home').outerHeight() + $('.filters').outerHeight() + $('.grid').outerHeight();
+        const footerTop = $('footer').offset().top;
+        
+        // Remover classes
+        $('body').removeClass('on-light-section on-dark-section');
+        
+        // Detectar secção atual
+        if (scrollY < splashBottom) {
+            // SPLASH - fundo preto → botão branco
+            $('body').addClass('on-dark-section');
+            console.log('📍 Secção: Splash (DARK)');
+        } 
+        else if (scrollY >= aboutTop && scrollY < aboutBottom) {
+            // ABOUT - fundo cinzento → botão preto
+            $('body').addClass('on-light-section');
+            console.log('📍 Secção: About (LIGHT)');
+        }
+        else if (scrollY >= projectsTop && scrollY < footerTop) {
+            // PROJECTS - fundo branco → botão preto
+            $('body').addClass('on-light-section');
+            console.log('📍 Secção: Projects (LIGHT)');
+        }
+        else if (scrollY >= footerTop) {
+            // FOOTER - fundo preto → botão branco
+            $('body').addClass('on-dark-section');
+            console.log('📍 Secção: Footer (DARK)');
+        }
+    }
+    
+    // Executar ao scroll
+    $(window).on('scroll', throttle(updateHeaderColor, 100));
+    
+    // Executar ao carregar
+    updateHeaderColor();
+    
     // ====== CURSOR (APENAS DESKTOP) ======
     if (!isMobile) {
         const cursor = $('#cursor');
@@ -42,7 +87,7 @@ jQuery(document).ready(function($) {
             });
         }, 16));
         
-        $('a, button, .project, .about-image').on('mouseenter', function() {
+        $('a, button, .project').on('mouseenter', function() {
             gsap.to(cursor, { scale: 2, duration: 0.3 });
         }).on('mouseleave', function() {
             gsap.to(cursor, { scale: 1, duration: 0.3 });
@@ -125,23 +170,97 @@ jQuery(document).ready(function($) {
     const menuBtn = $('.menu-btn');
     const menu = $('#menu');
     
-    menuBtn.on('click', function() {
+    menuBtn.on('click', function(e) {
+        e.preventDefault();
+        
         $(this).toggleClass('active');
         menu.toggleClass('active');
-        $('body').css('overflow', $(this).hasClass('active') ? 'hidden' : 'auto');
+        $('body').toggleClass('menu-open');
+        
+        if ($(this).hasClass('active')) {
+            $('body').css('overflow', 'hidden');
+            console.log('📂 Menu aberto');
+        } else {
+            $('body').css('overflow', 'auto');
+            console.log('📁 Menu fechado');
+        }
     });
     
-    $('#menu a').on('click', function() {
-        menuBtn.removeClass('active');
-        menu.removeClass('active');
-        $('body').css('overflow', 'auto');
+    // ====== SMOOTH SCROLL ======
+    function smoothScrollTo(target, offset) {
+        offset = offset || 80;
+        
+        if (!target || !target.length) {
+            console.warn('⚠️ Target não encontrado:', target);
+            return;
+        }
+        
+        console.log('📍 Scroll para:', target.attr('id') || target, 'Offset:', offset);
+        
+        $('html, body').animate({
+            scrollTop: target.offset().top - offset
+        }, 1200, 'swing', function() {
+            console.log('✅ Scroll completo!');
+            updateHeaderColor(); // Atualizar cor após scroll
+        });
+    }
+    
+    // Links do menu
+    $('#menu a').on('click', function(e) {
+        const href = $(this).attr('href');
+        
+        console.log('🔗 Link clicado:', href);
+        
+        if (href.startsWith('#')) {
+            e.preventDefault();
+            
+            const targetId = href;
+            const target = $(targetId);
+            
+            // Fechar menu
+            menuBtn.removeClass('active');
+            menu.removeClass('active');
+            $('body').removeClass('menu-open').css('overflow', 'auto');
+            
+            console.log('🎯 Target encontrado:', target.length ? 'SIM' : 'NÃO');
+            
+            // Aguardar menu fechar depois fazer scroll
+            setTimeout(function() {
+                smoothScrollTo(target, 80);
+            }, 300);
+        }
     });
     
+    // Todos os links âncora
+    $('a[href^="#"]').not('#menu a').on('click', function(e) {
+        const href = $(this).attr('href');
+        if (href === '#' || href === '#!') return;
+        
+        e.preventDefault();
+        const target = $(href);
+        
+        if (target.length) {
+            smoothScrollTo(target, 80);
+        }
+    });
+    
+    // Botão splash
+    $('.scroll-indicator').on('click', function(e) {
+        e.preventDefault();
+        console.log('👇 Scroll indicator clicado');
+        
+        const mainSection = $('#main');
+        if (mainSection.length) {
+            smoothScrollTo(mainSection, 0);
+        }
+    });
+    
+    // Fechar menu com ESC
     $(document).on('keydown', function(e) {
         if (e.key === 'Escape' && menu.hasClass('active')) {
             menuBtn.removeClass('active');
             menu.removeClass('active');
-            $('body').css('overflow', 'auto');
+            $('body').removeClass('menu-open').css('overflow', 'auto');
         }
     });
     
@@ -259,90 +378,6 @@ jQuery(document).ready(function($) {
         duration: 0.8,
         delay: 0.5,
         ease: 'power3.out'
-    });
-    
-    // ====== ANIMAÇÕES SECÇÃO QUEM SOU - CORRIGIDO ======
-    
-    console.log('🎨 Iniciando animações About Section...');
-    console.log('📍 About section encontrada:', $('.about-section').length);
-    console.log('🖼️ Imagens encontradas:', $('.about-image').length);
-    
-    // Título
-    gsap.from('.about-title', {
-        scrollTrigger: {
-            trigger: '.about-section',
-            start: 'top 70%',
-            markers: false // Muda para true para debug
-        },
-        y: 80,
-        opacity: 0,
-        duration: 1.2,
-        ease: 'power3.out',
-        onStart: () => console.log('✅ Título About animado')
-    });
-    
-    // Imagens - CORRIGIDO: Forçar estado inicial
-    $('.about-image').each(function(index) {
-        const image = $(this);
-        const direction = image.attr('data-direction');
-        
-        console.log(`🖼️ Configurando imagem ${index + 1} (direção: ${direction})`);
-        
-        // CRITICAL: Definir estado inicial
-        const startX = direction === 'left' ? -200 : 200;
-        gsap.set(image, {
-            x: startX,
-            opacity: 0
-        });
-        
-        // Criar animação
-        gsap.to(image, {
-            scrollTrigger: {
-                trigger: image,
-                start: 'top 85%',
-                end: 'top 60%',
-                toggleActions: 'play none none reverse',
-                markers: false, // Muda para true para debug
-                onEnter: () => console.log(`✅ Imagem ${index + 1} entrou no viewport`),
-                onLeave: () => console.log(`⬆️ Imagem ${index + 1} saiu do viewport (topo)`),
-                onEnterBack: () => console.log(`⬇️ Imagem ${index + 1} voltou ao viewport`),
-                onLeaveBack: () => console.log(`⬇️ Imagem ${index + 1} saiu do viewport (baixo)`)
-            },
-            x: 0,
-            opacity: 1,
-            duration: 1.2,
-            delay: index * 0.3,
-            ease: 'power3.out'
-        });
-        
-        // Parallax (apenas desktop)
-        if (!isMobile) {
-            gsap.to(image.find('img'), {
-                scrollTrigger: {
-                    trigger: image,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 1
-                },
-                y: -50,
-                ease: 'none'
-            });
-        }
-    });
-    
-    console.log('✅ Animações About configuradas');
-    
-    // Filtros
-    gsap.from('.filter', {
-        scrollTrigger: {
-            trigger: '.filters',
-            start: 'top 80%'
-        },
-        y: 30,
-        opacity: 0,
-        duration: 0.5,
-        stagger: 0.1,
-        ease: 'power2.out'
     });
     
     // Projetos
@@ -479,42 +514,11 @@ jQuery(document).ready(function($) {
         });
     }
     
-    // ====== SMOOTH SCROLL ======
-    $('a[href^="#"]').on('click', function(e) {
-        const href = $(this).attr('href');
-        if (href === '#') return;
-        
-        e.preventDefault();
-        const target = $(href);
-        
-        if (target.length) {
-            gsap.to(window, {
-                duration: 1.5,
-                scrollTo: {
-                    y: target,
-                    offsetY: 80
-                },
-                ease: 'power3.inOut'
-            });
-        }
-    });
-    
-    $('.scroll-indicator').on('click', function() {
-        gsap.to(window, {
-            duration: 1.5,
-            scrollTo: {
-                y: '#main',
-                offsetY: 0
-            },
-            ease: 'power3.inOut'
-        });
-    });
-    
     // ====== LOADING PROGRESS ======
     const loadingProgress = $('<div class="loading-progress"></div>');
     $('body').append(loadingProgress);
     
-    const images = $('.project img, .about-image img');
+    const images = $('.project img');
     let imagesLoaded = 0;
     const totalImages = images.length;
     
@@ -537,9 +541,9 @@ jQuery(document).ready(function($) {
                         delay: 0.5,
                         onComplete: function() {
                             $('.loading-progress').remove();
-                            // CRITICAL: Refresh após carregamento
                             ScrollTrigger.refresh();
-                            console.log('🔄 ScrollTrigger refreshed após loading');
+                            updateHeaderColor();
+                            console.log('🔄 ScrollTrigger refreshed');
                         }
                     });
                 }
@@ -549,11 +553,13 @@ jQuery(document).ready(function($) {
     } else {
         loadingProgress.remove();
         ScrollTrigger.refresh();
+        updateHeaderColor();
     }
     
-    // CRITICAL: Refresh após 1 segundo (garantia)
+    // Refresh final
     setTimeout(() => {
         ScrollTrigger.refresh();
+        updateHeaderColor();
         console.log('🔄 ScrollTrigger refresh final');
     }, 1000);
     
