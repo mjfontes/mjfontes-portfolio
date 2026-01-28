@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
         pinSpacing: false,
         pin:true,
         scrub: 3,
-        markers: true
+        markers: false
       }
     });
   });

@@ -29,10 +29,10 @@ console.log('🎨 About Composition v2.2 - Carregando...');
         
         // CORRIGIDO: Começa ANTES da secção aparecer
         // Quando secção ainda está 50% abaixo da janela
-        start: 'top 200%',  // Começa cedo (quando ainda no splash)
+        start: 'bottom 200%',  // Começa cedo (quando ainda no splash)
         
         // Termina quando sai
-        end: 'center center',
+        end: 'top top',
         
         markers: false  // Muda para true para debug
     };

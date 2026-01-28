@@ -1,13 +1,14 @@
 /**
- * MJDev Portfolio - JavaScript v3.7 FINAL
+ * MJDev Portfolio - JavaScript v3.8 FIXED
  * Menu button ADAPTATIVO por secção
+ * CORREÇÃO: Offset ajustado para secção About
  */
 
 jQuery(document).ready(function($) {
     
     'use strict';
     
-    console.log('🚀 Portfolio v3.7 iniciado - MENU ADAPTATIVO');
+    console.log('🚀 Portfolio v3.8 iniciado - OFFSET CORRIGIDO');
     
     // ====== CONFIGURAÇÕES ======
     const isMobile = window.matchMedia("(max-width: 768px)").matches || 
@@ -186,13 +187,30 @@ jQuery(document).ready(function($) {
         }
     });
     
-    // ====== SMOOTH SCROLL ======
-    function smoothScrollTo(target, offset) {
-        offset = offset || 80;
+    // ====== SMOOTH SCROLL - CORRIGIDO ======
+    // CORREÇÃO: Offset dinâmico baseado na secção de destino
+    function getOffsetForSection(targetId) {
+        // Secções que devem preencher todo o ecrã (offset 0)
+        const fullScreenSections = ['#about', '#splash'];
         
+        if (fullScreenSections.includes(targetId)) {
+            return 0;
+        }
+        
+        // Outras secções mantêm offset padrão
+        return 80;
+    }
+    
+    function smoothScrollTo(target, offset) {
         if (!target || !target.length) {
             console.warn('⚠️ Target não encontrado:', target);
             return;
+        }
+        
+        // Se offset não foi definido, calcular automaticamente
+        if (offset === undefined || offset === null) {
+            const targetId = '#' + target.attr('id');
+            offset = getOffsetForSection(targetId);
         }
         
         console.log('📍 Scroll para:', target.attr('id') || target, 'Offset:', offset);
@@ -205,7 +223,7 @@ jQuery(document).ready(function($) {
         });
     }
     
-    // Links do menu
+    // Links do menu - CORRIGIDO
     $('#menu a').on('click', function(e) {
         const href = $(this).attr('href');
         
@@ -224,14 +242,17 @@ jQuery(document).ready(function($) {
             
             console.log('🎯 Target encontrado:', target.length ? 'SIM' : 'NÃO');
             
+            // CORREÇÃO: Usar offset específico para cada secção
+            const offset = getOffsetForSection(targetId);
+            
             // Aguardar menu fechar depois fazer scroll
             setTimeout(function() {
-                smoothScrollTo(target, 80);
+                smoothScrollTo(target, offset);
             }, 300);
         }
     });
     
-    // Todos os links âncora
+    // Todos os links âncora - CORRIGIDO
     $('a[href^="#"]').not('#menu a').on('click', function(e) {
         const href = $(this).attr('href');
         if (href === '#' || href === '#!') return;
@@ -240,18 +261,26 @@ jQuery(document).ready(function($) {
         const target = $(href);
         
         if (target.length) {
-            smoothScrollTo(target, 80);
+            const offset = getOffsetForSection(href);
+            smoothScrollTo(target, offset);
         }
     });
     
-    // Botão splash
+    // Botão splash - scroll para #about (primeira secção do main)
     $('.scroll-indicator').on('click', function(e) {
         e.preventDefault();
         console.log('👇 Scroll indicator clicado');
         
-        const mainSection = $('#main');
-        if (mainSection.length) {
-            smoothScrollTo(mainSection, 0);
+        // CORREÇÃO: Ir direto para #about com offset 0
+        const aboutSection = $('#about');
+        if (aboutSection.length) {
+            smoothScrollTo(aboutSection, 0);
+        } else {
+            // Fallback para #main
+            const mainSection = $('#main');
+            if (mainSection.length) {
+                smoothScrollTo(mainSection, 0);
+            }
         }
     });
     
@@ -267,37 +296,26 @@ jQuery(document).ready(function($) {
     // ====== FILTROS ======
     $('.filter').on('click', function() {
         const filter = $(this).data('filter');
+        
+        // Atualizar botão ativo
         $('.filter').removeClass('active');
         $(this).addClass('active');
         
-        $('.project').each(function(index) {
-            const cat = $(this).data('cat');
-            const project = $(this);
-            
-            if (filter === 'all' || cat === filter) {
-                gsap.to(project, {
-                    opacity: 1,
-                    scale: 1,
-                    y: 0,
-                    duration: 0.6,
-                    delay: index * 0.1,
-                    ease: 'back.out(1.2)',
-                    onStart: function() {
-                        project.show().removeClass('hidden');
-                    }
-                });
-            } else {
-                gsap.to(project, {
-                    opacity: 0,
-                    scale: 0.8,
-                    y: 30,
-                    duration: 0.3,
-                    onComplete: function() {
-                        project.hide().addClass('hidden');
-                    }
-                });
-            }
-        });
+        // Filtrar projetos
+        if (filter === 'all') {
+            $('.project').removeClass('hidden');
+        } else {
+            $('.project').each(function() {
+                if ($(this).data('cat') === filter) {
+                    $(this).removeClass('hidden');
+                } else {
+                    $(this).addClass('hidden');
+                }
+            });
+        }
+        
+        // Atualizar layout
+        setTimeout(() => ScrollTrigger.refresh(), 300);
     });
     
     // ====== ANIMAÇÕES DE SCROLL ======
