@@ -1,0 +1,24 @@
+# Ficheiros do sistema
+.DS_Store
+**/.DS_Store
+
+# Ignorar tudo por defeito
+/*
+
+# Manter apenas código personalizado
+!.gitignore
+!CLAUDE.md
+!wp-content/
+
+# Dentro de wp-content, ignorar tudo
+wp-content/*
+
+# Manter apenas o tema filho e o plugin personalizado
+!wp-content/themes/
+!wp-content/plugins/
+
+wp-content/themes/*
+!wp-content/themes/mjdev-child/
+
+wp-content/plugins/*
+!wp-content/plugins/mjf-easteregg/

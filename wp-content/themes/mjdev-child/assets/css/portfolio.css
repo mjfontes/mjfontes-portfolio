@@ -1,0 +1,691 @@
+/* ========================================
+   MJDev Portfolio - CSS v3.8
+   - Fonte Neue Montreal (carregada via fonts.css)
+   - Header padding corrigido
+   - About-section removida (usa about-composition.css)
+   ======================================== */
+
+/* ========================================
+   RESET
+   ======================================== */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+body {
+    font-family: 'Neue Montreal', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #fff;
+    color: #000;
+    cursor: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* ========================================
+   CURSOR CUSTOMIZADO
+   ======================================== */
+#cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: difference;
+    border-color: #fff;
+}
+
+@media (max-width: 768px), (pointer: coarse) {
+    body {
+        cursor: auto !important;
+    }
+    #cursor {
+        display: none !important;
+    }
+}
+
+/* ========================================
+   SPLASH SCREEN
+   ======================================== */
+#splash {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.splash-letters {
+    font-family: 'Kumbh Sans', sans-serif;
+    font-size: clamp(40px, 10vw, 120px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9997;
+    will-change: transform, font-size;
+    pointer-events: none;
+    transition: color 0.3s ease;
+}
+
+.splash-line {
+    font-size: 1em;
+    line-height: 1;
+    display: block;
+}
+
+.splash-line-mid {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.splash-paren {
+    font-size: 1em;
+    line-height: 1;
+    font-weight: inherit;
+}
+
+.splash-star {
+    font-size: 0.4em;
+    font-weight: 700;
+    align-self: flex-start;
+    margin-top: 0.1em;
+    margin-left: 0.2em;
+}
+
+.splash-tagline {
+    font-size: 0.18em;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-left: 0.8em;
+    letter-spacing: 0;
+    white-space: nowrap;
+}
+
+.splash-text {
+    font-size: clamp(14px, 2.5vw, 18px);
+    font-weight: 400;
+    margin-bottom: 40px;
+    margin-top: 440px;
+    max-width: 600px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.splash-btns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    z-index: 9999;
+}
+
+.scroll-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 20px;
+    font-family: inherit;
+    transition: transform 0.3s;
+}
+
+.scroll-indicator:hover {
+    transform: translateY(5px);
+}
+
+.scroll-indicator span {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.7;
+}
+
+.mouse {
+    width: 26px;
+    height: 40px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.wheel {
+    width: 3px;
+    height: 8px;
+    background: #fff;
+    border-radius: 2px;
+    margin-top: 8px;
+    animation: scroll-wheel 2s infinite;
+}
+
+/* ========================================
+   SPLASH REEL
+   ======================================== */
+.splash-reel {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    overflow: hidden;
+    flex-shrink: 0;
+    pointer-events: none;
+}
+
+.reel-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+.reel-img.active {
+    opacity: 1;
+}
+
+@keyframes scroll-wheel {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+}
+
+/* ========================================
+   HEADER - PADDING CORRIGIDO
+   ======================================== */
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 45px 40px 30px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10002;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+#header > * {
+    pointer-events: auto;
+}
+
+/* ========================================
+   LOGO - ADAPTATIVO
+   ======================================== */
+.logo {
+    font-size: 14px;
+    font-weight: 700;
+    opacity: 0;
+    letter-spacing: 0.5px;
+    transition: opacity 0.3s, color 0.3s;
+    position: relative;
+    z-index: 10003;
+}
+
+/* Logo visível quando menu abre */
+body.menu-open .logo {
+    opacity: 1 !important;
+    color: #fff !important;
+}
+
+/* ========================================
+   MENU BUTTON - ADAPTATIVO POR SECÇÃO
+   ======================================== */
+.menu-btn {
+    width: 30px;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    outline: none;
+    position: relative;
+    z-index: 10003;
+}
+
+.menu-btn span {
+    width: 100%;
+    height: 2px;
+    background: #fff;
+    transition: background-color 0.3s, transform 0.3s, opacity 0.3s;
+    display: block;
+}
+
+/* X quando ativo */
+.menu-btn.active span:nth-child(1) { 
+    transform: rotate(45deg) translateY(9px);
+}
+
+.menu-btn.active span:nth-child(2) { 
+    opacity: 0;
+}
+
+.menu-btn.active span:nth-child(3) { 
+    transform: rotate(-45deg) translateY(-9px);
+}
+
+/* PRETO quando sobre fundos claros */
+body.on-light-section .menu-btn span {
+    background: #000;
+}
+
+body.on-light-section .logo {
+    color: #000;
+}
+
+/* BRANCO quando sobre fundos escuros */
+body.on-dark-section .menu-btn span {
+    background: #fff;
+}
+
+body.on-dark-section .logo {
+    color: #fff;
+}
+
+/* SEMPRE BRANCO quando menu aberto */
+body.menu-open .menu-btn span,
+.menu-btn.active span {
+    background: #fff !important;
+}
+
+body.menu-open .logo {
+    color: #fff !important;
+}
+
+/* ========================================
+   MENU FULLSCREEN
+   ======================================== */
+#menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: right 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+#menu.active {
+    right: 0;
+}
+
+#menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#menu li {
+    margin: 0;
+    padding: 0;
+}
+
+#menu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: clamp(40px, 8vw, 80px);
+    font-weight: 700;
+    display: block;
+    margin: 20px 0;
+    padding: 10px 20px;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+#menu a:hover {
+    transform: translateX(20px);
+    opacity: 0.7;
+}
+
+/* ========================================
+   MAIN CONTENT
+   ======================================== */
+#main {
+    position: relative;
+    background: #fff;
+}
+
+/* ========================================
+   HERO SECTION
+   ======================================== */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 20px 100px;
+    background: #fff;
+}
+
+.hero h1 {
+    font-size: clamp(60px, 15vw, 200px);
+    font-weight: 700;
+    margin-bottom: 40px;
+    line-height: 1;
+    letter-spacing: -2px;
+}
+
+.hero p {
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.hero a {
+    color: #000;
+    text-decoration: none;
+    border-bottom: 2px solid #000;
+    padding-bottom: 5px;
+    font-size: clamp(16px, 2.5vw, 20px);
+    font-weight: 500;
+    transition: opacity 0.3s;
+}
+
+.hero a:hover {
+    opacity: 0.7;
+}
+
+/* ========================================
+   SECÇÃO QUEM SOU
+   NOTA: Estilos em about-composition.css
+   ======================================== */
+/* .about-section e .about-container 
+   definidos em about-composition.css */
+
+/* ========================================
+   FILTROS
+   ======================================== */
+.filters {
+    padding: 60px 40px;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    border-bottom: 1px solid #eee;
+    flex-wrap: wrap;
+    background: #fff;
+}
+
+.filter {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 10px 20px;
+    position: relative;
+    transition: opacity 0.3s;
+    color: #000;
+    font-family: inherit;
+}
+
+.filter:hover {
+    opacity: 0.6;
+}
+
+.filter.active {
+    font-weight: 700;
+}
+
+.filter.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background: #000;
+    border-radius: 50%;
+}
+
+/* ========================================
+   GRID DE PROJETOS
+   ======================================== */
+.grid {
+    padding: 80px 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 60px;
+    background: #fff;
+}
+
+.project {
+    cursor: pointer;
+    transition: opacity 0.5s, transform 0.5s;
+    position: relative;
+}
+
+.project.hidden {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+}
+
+.img {
+    width: 100%;
+    height: 500px;
+    background: #f0f0f0;
+    overflow: hidden;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.img::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.project:hover .img::after {
+    opacity: 1;
+}
+
+.project h3 {
+    font-size: clamp(24px, 4vw, 28px);
+    font-weight: 500;
+    margin-bottom: 10px;
+    transition: transform 0.3s;
+}
+
+.project:hover h3 {
+    transform: translateX(10px);
+}
+
+.project p {
+    font-size: 14px;
+    font-weight: 400;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+footer {
+    background: #000;
+    color: #fff;
+    padding: 100px 40px;
+    text-align: center;
+}
+
+footer h2 {
+    font-size: clamp(40px, 8vw, 80px);
+    font-weight: 700;
+    margin-bottom: 40px;
+    line-height: 1.2;
+}
+
+footer a {
+    font-size: clamp(20px, 4vw, 24px);
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 2px solid #fff;
+    padding-bottom: 5px;
+    display: inline-block;
+    margin-bottom: 60px;
+    transition: opacity 0.3s;
+}
+
+footer a:hover {
+    opacity: 0.7;
+}
+
+footer p {
+    opacity: 0.7;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* ========================================
+   PAGE TRANSITION OVERLAY
+   ======================================== */
+#page-transition {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 99999;
+    transform: scaleY(0);
+    transform-origin: bottom center;
+    pointer-events: none;
+}
+
+/* ========================================
+   PROJECT LINK WRAPPER
+   ======================================== */
+.project-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ========================================
+   LOADING PROGRESS BAR
+   ======================================== */
+.loading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: #000;
+    z-index: 10004;
+    width: 0;
+}
+
+/* ========================================
+   RESPONSIVE - TABLET
+   ======================================== */
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+    }
+    
+    .img {
+        height: 400px;
+    }
+}
+
+/* ========================================
+   RESPONSIVE - MOBILE
+   ======================================== */
+@media (max-width: 768px) {
+    #header {
+        padding: 35px 20px 25px 20px;
+    }
+    
+    #menu a { 
+        font-size: 40px;
+        padding: 8px 15px;
+        margin: 15px 0;
+    }
+    
+    .hero {
+        padding: 100px 20px 80px;
+    }
+    
+    .filters {
+        padding: 40px 20px;
+        gap: 20px;
+    }
+    
+    .filter {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .grid { 
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 60px 20px;
+    }
+    
+    .img {
+        height: 400px;
+    }
+    
+    footer {
+        padding: 80px 20px;
+    }
+}

@@ -1,0 +1,87 @@
+/* ================================================
+   SPLASH — Blur Reveal (adições ao portfolio.css)
+   Substituir/complementar os estilos de .splash-letters
+   ================================================ */
+
+/* O título é agora fixed e controlado por JS */
+.splash-letters {
+    /* estilos base — JS sobrescreve inline */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 600;
+    font-size: clamp(28px, 6.5vw, 120px);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    display: flex;
+    flex-wrap: nowrap;
+    user-select: none;
+    pointer-events: none;
+    /* SEM margin-bottom, SEM gap — JS gere os spans */
+    margin: 0;
+    gap: 0;
+}
+
+/* Esconder .logo do header — .splash-letters é o logo */
+.logo {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Hint "mova o rato" */
+.mouse-hint {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+    z-index: 601;
+    opacity: 0;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* Barra de progresso do blur reveal */
+.splash-progress {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.5);
+    width: 0%;
+    z-index: 700;
+    pointer-events: none;
+}
+
+/* Botão scroll — oculto inicialmente, JS revela */
+.splash-btns {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* Splash text (tagline) — manter visível */
+.splash-text {
+    opacity: 1;
+    /* substituir animação antiga */
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+    cursor: pointer;
+}
+
+/* Mobile — revelar tudo imediatamente */
+@media (max-width: 768px) {
+    .splash-letters span {
+        filter: none !important;
+        opacity: 1 !important;
+    }
+    .mouse-hint {
+        display: none;
+    }
+}

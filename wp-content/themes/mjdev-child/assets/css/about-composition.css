@@ -1,0 +1,345 @@
+/* ========================================
+   ABOUT COMPOSITION CSS - v2.6 FIXED
+   Altura corrigida + scroll-margin-top
+   + Efeito Shine na Polaroid
+   ======================================== */
+
+/* ========================================
+   SECÇÃO ABOUT - ALTURA FORÇADA
+   CORREÇÃO: scroll-margin-top: 0 para evitar offset
+   ======================================== */
+#about.about-section,
+section.about-section,
+.about-section {
+    /* Fallbacks para diferentes browsers */
+    height: 100vh;
+    height: 100svh;
+    height: 100dvh;
+    
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+    
+    max-height: 100vh;
+    max-height: 100svh;
+    max-height: 100dvh;
+    
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #f8f8f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    
+    /* CORREÇÃO: Garantir que não há offset ao fazer scroll */
+    scroll-margin-top: 0;
+    scroll-snap-align: start;
+}
+
+/* Quando admin bar está visível */
+.admin-bar #about.about-section,
+.admin-bar section.about-section,
+.admin-bar .about-section {
+    height: calc(100vh - 32px);
+    height: calc(100svh - 32px);
+    height: calc(100dvh - 32px);
+    min-height: calc(100vh - 32px);
+    max-height: calc(100vh - 32px);
+}
+
+@media screen and (max-width: 782px) {
+    .admin-bar #about.about-section,
+    .admin-bar section.about-section,
+    .admin-bar .about-section {
+        height: calc(100vh - 46px);
+        height: calc(100svh - 46px);
+        height: calc(100dvh - 46px);
+        min-height: calc(100vh - 46px);
+        max-height: calc(100vh - 46px);
+    }
+}
+
+/* ========================================
+   ABOUT CONTAINER - ALTURA 100%
+   ======================================== */
+#about .about-container,
+.about-section .about-container,
+.about-container {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+}
+
+/* ========================================
+   COMPOSITION WRAPPER
+   ======================================== */
+.composition-wrapper {
+    position: relative;
+    width: 90vw;
+    height: 80vh;
+    max-width: 1400px;
+    max-height: 900px;
+}
+
+/* Base para todas as imagens */
+.composition-item {
+    position: absolute;
+    opacity: 0;
+    will-change: transform, opacity;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.composition-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+/* ========================================
+   POSIÇÕES FINAIS
+   ======================================== */
+
+/* 1. BOARDING PASS - Centro */
+.composition-boarding {
+    width: 60%;
+    max-width: 730px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+}
+
+/* 2. FLOR - Topo centro/esquerda */
+.composition-flor {
+    width: 35%;
+    max-width: 370px;
+    top: 5%;
+    left: 25%;
+    transform: rotate(-15deg);
+    z-index: 4;
+}
+
+/* 3. PERFUME - Topo direita */
+.composition-perfume {
+    width: 28%;
+    max-width: 265px;
+    top: 8%;
+    right: 20%;
+    transform: rotate(12deg);
+    z-index: 5;
+}
+
+/* 4. CHAVE - Baixo centro */
+.composition-chave {
+    width: 22%;
+    max-width: 240px;
+    bottom: 12%;
+    left: 50%;
+    transform: translateX(-50%) rotate(-25deg);
+    z-index: 2;
+}
+
+/* 5. POLAROID - Esquerda baixo (COM HOVER E SHINE) */
+.composition-polaroid {
+    width: 32%;
+    max-width: 345px;
+    bottom: 20%;
+    left: 8%;
+    transform: rotate(2deg);
+    z-index: 6;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transition: transform 0.4s ease-out, box-shadow 0.3s ease, filter 0.3s ease;
+    overflow: hidden;
+}
+
+/* ========================================
+   EFEITO SHINE/BRILHO - POLAROID
+   ======================================== */
+
+.composition-polaroid::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -75%;
+    width: 50%;
+    height: 200%;
+    background: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(255, 255, 255, 0.03) 20%,
+        rgba(255, 255, 255, 0.08) 40%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.08) 60%,
+        rgba(255, 255, 255, 0.03) 80%,
+        transparent 100%
+    );
+    transform: rotate(25deg);
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.composition-polaroid:hover::before {
+    opacity: 1;
+    animation: polaroid-shine 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes polaroid-shine {
+    0% {
+        left: -75%;
+        opacity: 1;
+    }
+    100% {
+        left: 125%;
+        opacity: 1;
+    }
+}
+
+/* HOVER EFFECT - Polaroid */
+.composition-polaroid:hover {
+    transform: rotate(6deg) scale(1.02);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+}
+
+/* 6. CHÁVENA - Direita baixo */
+.composition-chavena {
+    width: 28%;
+    max-width: 320px;
+    bottom: 15%;
+    right: 12%;
+    transform: rotate(5deg);
+    z-index: 4;
+}
+
+/* ========================================
+   POSIÇÕES INICIAIS (antes da animação)
+   ======================================== */
+
+.composition-boarding.initial {
+    top: -100%;
+    opacity: 0;
+}
+
+.composition-flor.initial {
+    left: -100%;
+    opacity: 0;
+}
+
+.composition-perfume.initial {
+    top: 100%;
+    opacity: 0;
+}
+
+.composition-chave.initial {
+    bottom: -100%;
+    opacity: 0;
+}
+
+.composition-polaroid.initial {
+    left: -100%;
+    opacity: 0;
+}
+
+.composition-chavena.initial {
+    right: -100%;
+    opacity: 0;
+}
+
+/* ========================================
+   SOMBRAS PARA PROFUNDIDADE
+   ======================================== */
+.composition-item {
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.08));
+}
+
+.composition-boarding {
+    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.12));
+}
+
+.composition-polaroid {
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
+}
+
+/* ========================================
+   RESPONSIVE - MOBILE
+   ======================================== */
+@media (max-width: 768px) {
+    #about.about-section,
+    section.about-section,
+    .about-section {
+        height: 100vh;
+        height: 100svh;
+        min-height: 100vh;
+        padding: 0 !important;
+        scroll-margin-top: 0;
+    }
+    
+    .about-container {
+        height: 100% !important;
+        max-width: none !important;
+    }
+    
+    .composition-wrapper {
+        width: 95vw;
+        height: 70vh;
+        transform: scale(0.65);
+    }
+    
+    .composition-boarding { width: 60%; }
+    .composition-flor { width: 35%; }
+    .composition-perfume { width: 28%; }
+    .composition-chave { width: 22%; }
+    .composition-polaroid { width: 32%; }
+    .composition-chavena { width: 28%; }
+    
+    /* Hover e shine desativados no mobile */
+    .composition-polaroid:hover {
+        transform: rotate(2deg) scale(1);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+    
+    .composition-polaroid:hover::before {
+        animation: none;
+        opacity: 0;
+    }
+}
+
+/* Tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .composition-wrapper {
+        width: 90vw;
+        height: 75vh;
+        transform: scale(0.8);
+    }
+}
+
+/* ========================================
+   PERFORMANCE
+   ======================================== */
+.composition-item {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
+}
+
+.composition-wrapper.loading .composition-item {
+    visibility: hidden;
+}
+
+.composition-wrapper.loaded .composition-item {
+    visibility: visible;
+}
